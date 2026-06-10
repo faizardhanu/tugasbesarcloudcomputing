@@ -38,4 +38,7 @@ COPY . .
 # Timpa folder .next dengan hasil build dari stage builder
 COPY --from=builder /app/.next ./.next
 
+# Fix CRLF → LF (file dibuat di Windows) agar bisa dijalankan di Alpine Linux
+RUN sed -i 's/\r$//' docker-entrypoint.sh && chmod +x docker-entrypoint.sh
+
 EXPOSE 3000 5000
