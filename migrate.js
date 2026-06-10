@@ -372,10 +372,11 @@ async function runMigration() {
     console.log('Connected to MySQL server successfully');
     
     // Create database first
-    console.log('Creating database...');
-    await connection.query('CREATE DATABASE IF NOT EXISTS hotel_u');
-    await connection.query('USE hotel_u');
-    console.log('Database hotel_u created/selected');
+    const dbName = process.env.DB_NAME || 'hotel_u';
+    console.log(`Creating database '${dbName}'...`);
+    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\``);
+    await connection.query(`USE \`${dbName}\``);
+    console.log(`Database ${dbName} created/selected`);
     
     // Create tables step by step
     console.log('Creating tables...');
@@ -391,7 +392,7 @@ async function runMigration() {
     const [tables] = await connection.execute('SHOW TABLES');
     
     console.log('\nMigration completed successfully!');
-    console.log('Database: hotel_u');
+    console.log(`Database: ${process.env.DB_NAME || 'hotel_u'}`);
     console.log(`Tables created: ${tables.length}`);
     console.log('Sample hotels and rooms have been added');
     console.log('\nTest users created:');
