@@ -1,4 +1,4 @@
-services:
+﻿services:
   # ─────────────────────────────────────────
   # Express Backend + WebSocket (port 5000)
   # ─────────────────────────────────────────
@@ -8,6 +8,7 @@ services:
       dockerfile: Dockerfile
       args:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
+    image: hotel_u_app:latest
     container_name: hotel_u_backend
     restart: always
     command: sh docker-entrypoint.sh
@@ -22,17 +23,17 @@ services:
   # Next.js Frontend (port 3000)
   # ─────────────────────────────────────────
   frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
+    image: hotel_u_app:latest
     container_name: hotel_u_frontend
     restart: always
-    command: npx next start -p 3000
+    # Pakai node server.js bukan npx next start
+    # npx akan coba download dari npm registry → hang di GCP
+    command: node server.js
     env_file: .env
     environment:
       NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
     depends_on:
       - backend
     networks:
