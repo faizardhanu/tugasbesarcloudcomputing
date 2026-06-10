@@ -5,6 +5,7 @@ node_modules
 # Git
 .git
 .gitignore
+.gitattributes
 
 # File environment (di-pass via docker-compose env_file, bukan di-copy ke image)
 .env
@@ -22,8 +23,13 @@ Thumbs.db
 # IDE
 .vscode
 .idea
+.gemini
 
 # Docker files sendiri (tidak perlu masuk ke image)
 Dockerfile
 docker-compose.yml
 nginx/
+
+# Test files
+test-*.js
+check-*.js
