@@ -6,7 +6,8 @@ import { API_BASE_URL } from '@/lib/api'
  * e.g. "http://localhost:5000/api" → "ws://localhost:5000/ws"
  */
 function buildWsUrl(): string {
-  const apiUrl = new URL(API_BASE_URL)
+  // Handle relative API_BASE_URL (e.g. "/api") by resolving against current window location
+  const apiUrl = new URL(API_BASE_URL, typeof window !== 'undefined' ? window.location.href : 'http://localhost:5000')
   const wsProtocol = apiUrl.protocol === 'https:' ? 'wss:' : 'ws:'
   const port = apiUrl.port ? `:${apiUrl.port}` : ''
   return `${wsProtocol}//${apiUrl.hostname}${port}/ws`
