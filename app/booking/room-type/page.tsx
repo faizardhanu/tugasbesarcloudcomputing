@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { Calendar, Users, CreditCard, Smartphone, Wallet } from 'lucide-react'
@@ -8,7 +8,7 @@ import { bookRoomType } from '@/lib/api'
 import { useAuth } from '@/context/AuthContext'
 import { useToast } from '@/context/ToastContext'
 
-export default function BookRoomTypePage() {
+function BookRoomTypeContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { isAuthenticated } = useAuth()
@@ -281,5 +281,19 @@ export default function BookRoomTypePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function BookRoomTypePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-xl text-gray-600">Loading booking information...</p>
+        </div>
+      </div>
+    }>
+      <BookRoomTypeContent />
+    </Suspense>
   )
 }
