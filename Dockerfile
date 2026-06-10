@@ -1,4 +1,4 @@
-﻿# =============================================================
+# =============================================================
 # Stage 1: Install semua deps (termasuk devDeps untuk build)
 # =============================================================
 FROM node:20-alpine AS deps
@@ -48,10 +48,12 @@ COPY migrate.js ./
 COPY docker-entrypoint.sh ./
 COPY .env.example ./
 
-# Copy Next.js standalone build output
-# standalone/ berisi server.js (Next.js standalone server) + node_modules minimal
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+# Copy Next.js config dan package.json (dibutuhkan next start)
+COPY next.config.js ./
+COPY package.json ./
+
+# Copy Next.js full build output (bukan standalone)
+COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
 # Fix CRLF -> LF (file dibuat di Windows) agar bisa dijalankan di Alpine Linux

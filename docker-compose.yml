@@ -1,4 +1,4 @@
-﻿services:
+services:
   # ─────────────────────────────────────────
   # Express Backend + WebSocket (port 5000)
   # ─────────────────────────────────────────
@@ -26,9 +26,9 @@
     image: hotel_u_app:latest
     container_name: hotel_u_frontend
     restart: always
-    # Pakai node server.js bukan npx next start
-    # npx akan coba download dari npm registry → hang di GCP
-    command: node server.js
+    # Pakai next start via node_modules (tidak perlu download apapun)
+    # Hindari npx → bisa hang karena download dari npm registry di GCP
+    command: ./node_modules/.bin/next start -p 3000
     env_file: .env
     environment:
       NODE_ENV: production
