@@ -1,0 +1,29 @@
+# Dependensi & build artifacts
+node_modules
+.next
+
+# Git
+.git
+.gitignore
+
+# File environment (di-pass via docker-compose env_file, bukan di-copy ke image)
+.env
+.env.local
+.env.*.local
+
+# Log
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode
+.idea
+
+# Docker files sendiri (tidak perlu masuk ke image)
+Dockerfile
+docker-compose.yml
+nginx/

@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* Toast animations */
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.3s ease-out;
+}
+
+/* Date input styling */
+input[type="date"] {
+  color: #374151 !important;
+  background-color: white !important;
+}
+
+input[type="date"]::-webkit-datetime-edit {
+  color: #374151;
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  color: #374151;
+}
+
+input[type="date"]::-webkit-datetime-edit-month-field {
+  color: #374151;
+}
+
+input[type="date"]::-webkit-datetime-edit-day-field {
+  color: #374151;
+}
+
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: #374151;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: #374151;
+  opacity: 1;
+}
+
+input[type="number"] {
+  color: #374151 !important;
+  background-color: white !important;
+}
+
+textarea {
+  color: #374151 !important;
+  background-color: white !important;
+}
+
+input[type="email"] {
+  color: #374151 !important;
+  background-color: white !important;
+}
+
+input[type="password"] {
+  color: #374151 !important;
+  background-color: white !important;
+}
+
+input[type="text"] {
+  color: #374151 !important;
+  background-color: white !important;
+}
+
+/* Image loading fallback */
+img {
+  background-color: #f3f4f6;
+}
+
+.next-image-loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Staff UI text visibility fixes */
+.staff-text-white {
+  color: white !important;
+}
+
+.staff-text-dark {
+  color: #1f2937 !important;
+}
+
+.staff-bg-primary {
+  background-color: #dc2626 !important;
+  color: white !important;
+}
+
+/* Ensure buttons have proper contrast */
+button.bg-primary-600 {
+  background-color: #dc2626 !important;
+  color: white !important;
+}
+
+button.bg-blue-600 {
+  background-color: #2563eb !important;
+  color: white !important;
+}
+
+button.bg-green-600 {
+  background-color: #16a34a !important;
+  color: white !important;
+}
+
+button.bg-red-600 {
+  background-color: #dc2626 !important;
+  color: white !important;
+}
+
+/* Force text visibility in staff sections */
+.staff-section h1,
+.staff-section h2,
+.staff-section h3,
+.staff-section h4 {
+  color: #1f2937 !important;
+}
+
+.staff-section p,
+.staff-section span,
+.staff-section div {
+  color: #374151 !important;
+}
+
+.staff-section .text-white {
+  color: white !important;
+}
+
+/* Override dark mode for staff pages */
+@media (prefers-color-scheme: dark) {
+  .staff-override {
+    background-color: #f9fafb !important;
+    color: #1f2937 !important;
+  }
+  
+  .staff-override .bg-white {
+    background-color: white !important;
+    color: #1f2937 !important;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
