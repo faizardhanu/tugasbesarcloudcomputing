@@ -1,28 +1,5 @@
 services:
   # ─────────────────────────────────────────
-  # Database MySQL
-  # ─────────────────────────────────────────
-  db:
-    image: mysql:8.0
-    container_name: hotel_u_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_PASSWORD}"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 30s
-    networks:
-      - hotel_network
-
-  # ─────────────────────────────────────────
   # Express Backend + WebSocket (port 5000)
   # ─────────────────────────────────────────
   backend:
@@ -30,17 +7,14 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost/api}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
     container_name: hotel_u_backend
     restart: always
     command: sh docker-entrypoint.sh
     env_file: .env
     environment:
-      DB_HOST: db          # override agar connect ke container db, bukan localhost
       NODE_ENV: production
-    depends_on:
-      db:
-        condition: service_healthy
+      # DB_HOST dibaca dari .env (IP VM Database Server GCP)
     networks:
       - hotel_network
 
@@ -52,7 +26,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost/api}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-/api}
     container_name: hotel_u_frontend
     restart: always
     command: npx next start -p 3000
@@ -80,9 +54,6 @@ services:
       - frontend
     networks:
       - hotel_network
-
-volumes:
-  mysql_data:
 
 networks:
   hotel_network:
